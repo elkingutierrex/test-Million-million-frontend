@@ -30,8 +30,8 @@
                  0 0 20px #00aaff,
                  0 0 30px #00aaff;} /* En la mitad, un poco más grande */
   100% { transform: scale(1);
-          text-shadow: none;
-         text-shadow: 0 0 10px #8ea331, /* Brillo exterior azul */
+        
+          text-shadow: 0 0 10px #8ea331, /* Brillo exterior azul */
                  0 0 20px #31a339,
                  0 0 30px #8ea331;} /* Vuelta al estado inicial */
 }
