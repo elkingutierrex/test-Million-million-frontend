@@ -38,7 +38,8 @@
 
 .beat {
   animation: beat 3s infinite; 
-  font-family:  Geneva, Verdana, sans-serif;/* Duración de 0.5 segundos, repitiéndose infinitamente */
+  -webkit-text-stroke: 1px black;
+  font-family:  math,  Geneva, Verdana, sans-serif;/* Duración de 0.5 segundos, repitiéndose infinitamente */
 }
 .shane {
   font-size: 2em;
