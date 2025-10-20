@@ -2,11 +2,15 @@
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { mockProperties } from "@/app/data/mockProperties";
+import { mockProperties } from "@/data/mockProperties";
 
-export default function PropertyDetailPage() {
+export default function PropertyDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const id = useParams();
-  const property = mockProperties.find((prop) => prop.id === id);
+  const property = mockProperties.find((prop) => prop.id === params.id);
 
   if (!property) {
     return (

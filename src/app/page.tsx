@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import PropertyCard from "@/components/PropertyCard";
-import { mockProperties } from "./data/mockProperties";
+import { mockProperties } from "../data/mockProperties";
 import Navbar from "@/components/NavBar";
 
 export default function Home() {
@@ -11,6 +11,13 @@ export default function Home() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
+  const cleanFilters = () => {
+    setSearch("");
+    setCity("");
+    setMinPrice("");
+    setMaxPrice("");
+  };
+
   const filteredProperties = mockProperties.filter((p) => {
     const matchesSearch =
       p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -18,6 +25,7 @@ export default function Home() {
     const matchesCity = city ? p.city === city : true;
     const matchesMin = minPrice ? p.price >= Number(minPrice) : true;
     const matchesMax = maxPrice ? p.price <= Number(maxPrice) : true;
+
     return matchesSearch && matchesCity && matchesMin && matchesMax;
   });
 
@@ -32,7 +40,7 @@ export default function Home() {
           </h1>
 
           {/* Filters */}
-          <div className="bg-white shadow rounded-lg p-4 mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="bg-white shadow rounded-lg p-4 mb-8 grid grid-cols-1 md:grid-cols-5 gap-4">
             <input
               type="text"
               placeholder="Buscar por nombre o dirección"
@@ -69,6 +77,12 @@ export default function Home() {
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
             />
+            <button
+              onClick={cleanFilters}
+              className="bg-gray-800 text-white rounded-lg p-2 hover:bg-gray-700 transition"
+            >
+              Limpiar filtros
+            </button>
           </div>
 
           {/* Grid - properties */}
