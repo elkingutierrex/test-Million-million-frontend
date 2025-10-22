@@ -2,7 +2,8 @@
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { mockProperties } from "@/data/mockProperties";
+import { useProperties } from "@/context/PropertiesContext";
+// import { mockProperties } from "@/data/mockProperties";
 
 export default function PropertyDetailPage({
   params,
@@ -10,11 +11,13 @@ export default function PropertyDetailPage({
   params: { id: string };
 }) {
   const id = useParams();
-  const property = mockProperties.find((prop) => prop.id === params.id);
+  const { properties } = useProperties();
+  const property = properties.find((prop) => prop.id === params.id);
 
   if (!property) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
+        {JSON.stringify(properties)}
         <h3> Propiedad no encontrada </h3>
         <Link href="/" className="mt-4 text-indigo-600 hover:underline">
           Volver a la página principal

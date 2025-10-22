@@ -1,15 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropertyCard from "@/components/PropertyCard";
-import { mockProperties } from "../data/mockProperties";
+// import { properties } from "../data/properties";
 import Navbar from "@/components/NavBar";
+import { getProperties } from "@/services/propertyService";
+// import { mockProperties } from '../data/mockProperties';
+import { Property } from "@/types/property";
+import { useProperties } from "@/context/PropertiesContext";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const [city, setCity] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const { properties, setProperties } = useProperties();
 
   const cleanFilters = () => {
     setSearch("");
@@ -18,7 +23,25 @@ export default function Home() {
     setMaxPrice("");
   };
 
-  const filteredProperties = mockProperties.filter((p) => {
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await getProperties({
+          name: search,
+          address: city,
+          minPrice: minPrice ? Number(minPrice) : undefined,
+          maxPrice: maxPrice ? Number(maxPrice) : undefined,
+        });
+        setProperties(data);
+      } catch (error) {
+        console.error("Error fetching properties:", error);
+      }
+    };
+
+    loadData();
+  }, [search, city, minPrice, maxPrice, setProperties]);
+
+  const filteredProperties = properties.filter((p) => {
     const matchesSearch =
       p.name.toLowerCase().includes(search.toLowerCase()) ||
       p.address.toLowerCase().includes(search.toLowerCase());
@@ -29,7 +52,7 @@ export default function Home() {
     return matchesSearch && matchesCity && matchesMin && matchesMax;
   });
 
-  const uniqueCities = [...new Set(mockProperties.map((p) => p.city))];
+  const uniqueCities = [...new Set(properties.map((p) => p.city))];
 
   return (
     <div>
