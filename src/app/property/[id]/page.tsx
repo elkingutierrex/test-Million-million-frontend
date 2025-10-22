@@ -10,9 +10,9 @@ export default function PropertyDetailPage({
 }: {
   params: { id: string };
 }) {
-  const id = useParams();
+  const id = useParams().id;
   const { properties } = useProperties();
-  const property = properties.find((prop) => prop.id === params.id);
+  const property = properties.find((prop) => prop.id === id);
 
   if (!property) {
     return (
